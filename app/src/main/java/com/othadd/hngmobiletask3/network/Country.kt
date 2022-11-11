@@ -7,6 +7,7 @@ const val NA = "not available"
 
 data class Country(val json: JSONObject) {
     lateinit var name: String
+    lateinit var officialName: String
     var translatedNames = HashMap<String, String>()
     lateinit var flagURL: String
     lateinit var coatOfArmURL: String
@@ -31,6 +32,8 @@ data class Country(val json: JSONObject) {
     private fun initializeFields(json: JSONObject) {
         name = json.getJSONObject("name")
             .getString("common")
+        officialName = json.getJSONObject("name")
+            .getString("official")
 
         // logging
         Log.e("parsing json", "started $name")
