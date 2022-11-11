@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id "androidx.navigation.safeargs"
+    id 'kotlin-kapt'
 }
 
 android {
@@ -70,5 +71,9 @@ dependencies {
     // Moshi
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
 
+    // Scalar
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+
+    // Coil
+    implementation "io.coil-kt:coil:1.1.1"
 }

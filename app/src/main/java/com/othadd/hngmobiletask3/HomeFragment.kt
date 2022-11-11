@@ -20,12 +20,16 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        val adapter = CountryRecyclerAdapter()
+
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = sharedViewModel
             homeFragment = this@HomeFragment
+            countryRecyclerView.adapter = adapter
         }
 
         return binding.root
     }
+
 }

@@ -1,31 +1,73 @@
 package com.othadd.hngmobiletask3
 
 import androidx.lifecycle.*
-import com.othadd.hngmobiletask3.network.Country
+import com.othadd.hngmobiletask3.models.Country
+import com.othadd.hngmobiletask3.models.CountryAlphabetGroup
+import com.othadd.hngmobiletask3.models.UICountry
 import com.othadd.hngmobiletask3.network.NetworkApi
+import com.othadd.hngmobiletask3.util.toUICountries
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 
 class ExploreViewModel: ViewModel() {
 
-    private var _country = MutableLiveData<String>()
-    val country: LiveData<String> get() = _country
+    private var _countriesForRecyclerView = MutableLiveData<List<Any>>()
+    val countriesForRecyclerView: LiveData<List<Any>> get() = _countriesForRecyclerView
 
-    private val countries = mutableListOf<Country>()
+//    private val countriesForRecyclerview = mutableListOf<Any>()
+
+
 
     init {
         viewModelScope.launch {
             val countriesJsonString = NetworkApi.retrofitService.getAllCountries()
             val countriesJsonArray = JSONArray(countriesJsonString)
-            populateCountries(countriesJsonArray)
+            val countries = parseJsonIntoCountries(countriesJsonArray)
+            val uiCountries = countries.toUICountries()
+            val countryGroupsByAlphabet = sortCountriesIntoAlphabetGroups(uiCountries)
+            populateListForRecyclerView(countryGroupsByAlphabet)
         }
     }
 
-    private fun populateCountries(countriesJsonArray: JSONArray) {
+    private fun populateListForRecyclerView(countryGroupsByAlphabet: MutableList<CountryAlphabetGroup>) {
+        val listForRecyclerview = mutableListOf<Any>()
+        for (alphabetGroup in countryGroupsByAlphabet){
+            listForRecyclerview.add(alphabetGroup.alphabet.uppercase())
+            listForRecyclerview.addAll(alphabetGroup.countries)
+        }
+        _countriesForRecyclerView.value = listForRecyclerview
+    }
+
+    private fun sortCountriesIntoAlphabetGroups(uiCountries: List<UICountry>): MutableList<CountryAlphabetGroup> {
+        val countryAlphabetGroups = mutableListOf<CountryAlphabetGroup>()
+
+        fun findOrCreateAlphabetGroup(alphabet: String): Pair<CountryAlphabetGroup, Boolean>{
+            val countryGroup = countryAlphabetGroups.find { it.alphabet == alphabet }
+            if (countryGroup == null){
+                return Pair(CountryAlphabetGroup(alphabet), true)
+            }
+            return Pair(countryGroup, false)
+        }
+
+        for (country in uiCountries){
+            val response = findOrCreateAlphabetGroup(country.name[0].toString())
+            response.first.countries.add(country)
+            if (response.second){
+                countryAlphabetGroups.add(response.first)
+            }
+        }
+
+        countryAlphabetGroups.sortBy { it.alphabet }
+
+        return countryAlphabetGroups
+    }
+
+    private fun parseJsonIntoCountries(countriesJsonArray: JSONArray): MutableList<Country> {
+        val countries = mutableListOf<Country>()
         for (index in 1..countriesJsonArray.length()){
             countries.add(Country(countriesJsonArray.getJSONObject(index - 1)))
         }
-        _country.value = countries.size.toString()
+        return countries
     }
 }
 

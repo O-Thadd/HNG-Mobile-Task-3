@@ -1,4 +1,4 @@
-package com.othadd.hngmobiletask3.network
+package com.othadd.hngmobiletask3.models
 
 import android.util.Log
 import org.json.JSONObject
@@ -24,6 +24,10 @@ data class Country(val json: JSONObject) {
     lateinit var timezone: String
     lateinit var dialingCode: String
     lateinit var drivingSide: String
+
+    fun toUICountry(): UICountry{
+        return UICountry(name, capital, flagURL)
+    }
 
     init {
         initializeFields(json)
