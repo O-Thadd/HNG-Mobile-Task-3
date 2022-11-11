@@ -1,6 +1,9 @@
 package com.othadd.hngmobiletask3.network
 
+import android.util.Log
 import org.json.JSONObject
+
+const val NA = "not available"
 
 data class Country(val json: JSONObject) {
     lateinit var name: String
@@ -27,21 +30,34 @@ data class Country(val json: JSONObject) {
 
     private fun initializeFields(json: JSONObject) {
         name = json.getJSONObject("name")
-            .getString("official")
+            .getString("common")
+
+        // logging
+        Log.e("parsing json", "started $name")
 
         val nameTranslationsJSONObject = json.getJSONObject("translations")
         val nameTranslationsIterator = nameTranslationsJSONObject.keys()
-        while (nameTranslationsIterator.hasNext()){
+        while (nameTranslationsIterator.hasNext()) {
             val languageTranslationKey = nameTranslationsIterator.next()
-            val languageTranslationValue = nameTranslationsJSONObject.getJSONObject(languageTranslationKey).getString("official")
+            val languageTranslationValue =
+                nameTranslationsJSONObject.getJSONObject(languageTranslationKey)
+                    .getString("official")
             translatedNames[languageTranslationKey] = languageTranslationValue
         }
 
         flagURL = json.getJSONObject("flags").getString("png")
 
-        coatOfArmURL = json.getJSONObject("coatOfArms").getString("png")
+        coatOfArmURL = try {
+            json.getJSONObject("coatOfArms").getString("png")
+        } catch (e: Exception) {
+            NA
+        }
 
-        capital = json.getJSONArray("capital")[0] as String
+        capital = try {
+            json.getJSONArray("capital")[0] as String
+        } catch (e: Exception) {
+            NA
+        }
 
         population = json.getLong("population")
 
@@ -49,38 +65,55 @@ data class Country(val json: JSONObject) {
 
         landLocked = json.getString("landlocked")
 
-        independence = json.getString("independent")
+        independence = try { json.getString("independent") } catch (e: Exception) { NA }
 
         memberOfUN = json.getString("unMember")
 
         region = json.getString("region")
 
-        subRegion = json.getString("subregion")
-
-        val languagesJSONObject = json.getJSONObject("languages")
-        val languagesIterator = languagesJSONObject.keys()
-        while (languagesIterator.hasNext()){
-            val languageKey = languagesIterator.next()
-            val languageValue = nameTranslationsJSONObject.getJSONObject(languageKey).getString("official")
-            languages.add(languageValue)
+        subRegion = try {
+            json.getString("subregion")
+        } catch (e: Exception) {
+            NA
         }
 
-        val currenciesJSONObject = json.getJSONObject("currencies")
-        val currenciesIterator = currenciesJSONObject.keys()
-        currency = if (currenciesIterator.hasNext()){
-            val currencyKey = currenciesIterator.next()
-            val currencyJSONObject = currenciesJSONObject.getJSONObject(currencyKey)
-            currencyJSONObject.getString("name")
-        } else{
-            "NA"
-        }
+        try {
+            val languagesJSONObject = json.getJSONObject("languages")
+            val languagesIterator = languagesJSONObject.keys()
+            while (languagesIterator.hasNext()) {
+                val languageKey = languagesIterator.next()
+                val languageValue = languagesJSONObject.getString(languageKey)
+                languages.add(languageValue)
+            }
+        } catch (e: Exception) { }
+
+        currency =
+            try {
+                val currenciesJSONObject = json.getJSONObject("currencies")
+                val currenciesIterator = currenciesJSONObject.keys()
+                if (currenciesIterator.hasNext()) {
+                    val currencyKey = currenciesIterator.next()
+                    val currencyJSONObject = currenciesJSONObject.getJSONObject(currencyKey)
+                    currencyJSONObject.getString("name")
+                } else {
+                    NA
+                }
+            } catch (e: Exception) {
+                NA
+            }
 
         timezone = json.getJSONArray("timezones")[0] as String
 
-        val dialingCodeJSONObject = json.getJSONObject("idd")
-        val dialingCodeRoot = dialingCodeJSONObject.getString("root")
-        val dialingCodeSuffix = dialingCodeJSONObject.getJSONArray("suffixes")[0] as String
-        dialingCode = dialingCodeRoot + dialingCodeSuffix
+        dialingCode =
+            try {
+                val dialingCodeJSONObject = json.getJSONObject("idd")
+                val dialingCodeRoot = dialingCodeJSONObject.getString("root")
+                val dialingCodeSuffix = dialingCodeJSONObject.getJSONArray("suffixes")[0] as String
+                dialingCodeRoot + dialingCodeSuffix
+            } catch (e: Exception) {
+                NA
+            }
+
 
         val carJSONObject = json.getJSONObject("car")
         drivingSide = carJSONObject.getString("side")
