@@ -30,6 +30,20 @@ class HomeFragment : Fragment() {
     private lateinit var italianRadioButton: ImageView
     private lateinit var spanishRadioButton: ImageView
     private lateinit var languagesIndicator: TextView
+    private lateinit var filterDialog: ConstraintLayout
+    private lateinit var africaCheckBox: ImageView
+    private lateinit var antarticaCheckBox: ImageView
+    private lateinit var asiaCheckBox: ImageView
+    private lateinit var australiaCheckBox: ImageView
+    private lateinit var europeCheckBox: ImageView
+    private lateinit var northAmericaCheckBox: ImageView
+    private lateinit var southAmericaCheckBox: ImageView
+    private lateinit var utcPlus1CheckBox: ImageView
+    private lateinit var utcPlus2CheckBox: ImageView
+    private lateinit var utcPlus3CheckBox: ImageView
+    private lateinit var utcMinus1CheckBox: ImageView
+    private lateinit var utcMinus2CheckBox: ImageView
+    private lateinit var utcMinus3CheckBox: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +77,21 @@ class HomeFragment : Fragment() {
             italianRadioButton = italianRadioButtonImageView
             spanishRadioButton = spanishRadioButtonImageView
             languagesIndicator = languageIndicatorTextView
+            filterDialog = filterDialogConstraintLayout
+            africaCheckBox = africaCheckBoxImageView
+            antarticaCheckBox = antarcticaCheckBoxImageView
+            asiaCheckBox = asiaCheckBoxImageView
+            australiaCheckBox = australiaCheckBoxImageView
+            europeCheckBox = europeCheckBoxImageView
+            northAmericaCheckBox = northAmericaCheckBoxImageView
+            southAmericaCheckBox = southAmericaCheckBoxImageView
+            utcPlus1CheckBox = utcPlus1CheckBoxImageView
+            utcPlus2CheckBox = utcPlus2CheckBoxImageView
+            utcPlus3CheckBox = utcPlus3CheckBoxImageView
+            utcMinus1CheckBox = utcMinus1CheckBoxImageView
+            utcMinus2CheckBox = utcMinus2CheckBoxImageView
+            utcMinus3CheckBox = utcMinus3CheckBoxImageView
+
         }
 
         val adapter = CountryRecyclerAdapter{
@@ -130,11 +159,15 @@ class HomeFragment : Fragment() {
         spanishRadioButton.setImageResource(R.drawable.ic_radio_button_unchecked)
     }
 
-    fun navigateToDetailsFragment(){
+    fun filterCheckBoxClicked(code: String){
+
+    }
+
+    private fun navigateToDetailsFragment(){
         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment())
     }
 
-    fun showDialog(dialog: ConstraintLayout){
+    private fun showDialog(dialog: ConstraintLayout){
 
         backPressedCallback.isEnabled = true
         dialogOverlay.visibility = View.VISIBLE
@@ -169,6 +202,16 @@ class HomeFragment : Fragment() {
 
     fun hideLanguagesDialog(){
         hideDialog(languagesDialog)
+    }
+
+    fun showFilterDialog(){
+        showDialog(filterDialog)
+        sharedViewModel.prepFilteration()
+    }
+
+    fun hideFilterDialog(){
+        hideDialog(filterDialog)
+        sharedViewModel.suspendFilteration()
     }
 
 }

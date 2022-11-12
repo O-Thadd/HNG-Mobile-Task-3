@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:background="@drawable/bg_button"
-            android:onClick="@{() -> homeFragment.navigateToDetailsFragment()}"
+            android:onClick="@{() -> homeFragment.showFilterDialog()}"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/languageButton_linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -166,6 +166,416 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/filterDialog_constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/bg_dialog"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/filterHeading_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_bold"
+                android:text="Filter"
+                android:textColor="@color/explore_black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/filterDialogCloseButton_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_close"
+                android:onClick="@{() -> homeFragment.hideFilterDialog()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/continentHeading_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_bold"
+                android:text="Continent"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filterHeading_textView"
+                />
+
+            <ImageView
+                android:id="@+id/continentDropDownButton_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_down"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/continentHeading_textview"
+                app:layout_constraintBottom_toBottomOf="@id/continentHeading_textview"
+                />
+
+            <TextView
+                android:id="@+id/africa_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="Africa"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/continentHeading_textview"
+                />
+
+            <ImageView
+                android:id="@+id/africaCheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/africa_textview"
+                app:layout_constraintBottom_toBottomOf="@id/africa_textview"
+                />
+
+            <TextView
+                android:id="@+id/antarctica_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="Antarctica"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/africa_textview"
+                />
+
+            <ImageView
+                android:id="@+id/antarcticaCheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/antarctica_textview"
+                app:layout_constraintBottom_toBottomOf="@id/antarctica_textview"
+                />
+
+            <TextView
+                android:id="@+id/asia_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="Asia"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/antarctica_textview"
+                />
+
+            <ImageView
+                android:id="@+id/asiaCheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/asia_textview"
+                app:layout_constraintBottom_toBottomOf="@id/asia_textview"
+                />
+
+            <TextView
+                android:id="@+id/australia_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="Australis"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/asia_textview"
+                />
+
+            <ImageView
+                android:id="@+id/australiaCheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/australia_textview"
+                app:layout_constraintBottom_toBottomOf="@id/australia_textview"
+                />
+
+            <TextView
+                android:id="@+id/europe_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="Europe"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/australia_textview"
+                />
+
+            <ImageView
+                android:id="@+id/europeCheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/europe_textview"
+                app:layout_constraintBottom_toBottomOf="@id/europe_textview"
+                />
+
+            <TextView
+                android:id="@+id/northAmerica_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="North America"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/europe_textview"
+                />
+
+            <ImageView
+                android:id="@+id/northAmericaCheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/northAmerica_textview"
+                app:layout_constraintBottom_toBottomOf="@id/northAmerica_textview"
+                />
+
+            <TextView
+                android:id="@+id/southAmerica_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="South America"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/northAmerica_textview"
+                />
+
+            <ImageView
+                android:id="@+id/southAmericaCheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/southAmerica_textview"
+                app:layout_constraintBottom_toBottomOf="@id/southAmerica_textview"
+                />
+
+            <TextView
+                android:id="@+id/timezoneHeading_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_bold"
+                android:text="Time Zone"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/southAmerica_textview"
+                />
+
+            <ImageView
+                android:id="@+id/timezoneDropDownButton_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_down"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/timezoneHeading_textview"
+                app:layout_constraintBottom_toBottomOf="@id/timezoneHeading_textview"
+                />
+
+            <TextView
+                android:id="@+id/utcPlus1_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="UTC+1:00"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timezoneHeading_textview"
+                />
+
+            <ImageView
+                android:id="@+id/utcPlus1CheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/utcPlus1_textview"
+                app:layout_constraintBottom_toBottomOf="@id/utcPlus1_textview"
+                />
+
+            <TextView
+                android:id="@+id/utcPlus2_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="UTC+2:00"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/utcPlus1_textview"
+                />
+
+            <ImageView
+                android:id="@+id/utcPlus2CheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/utcPlus2_textview"
+                app:layout_constraintBottom_toBottomOf="@id/utcPlus2_textview"
+                />
+
+            <TextView
+                android:id="@+id/utcPlus3_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="UTC+3:00"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/utcPlus2_textview"
+                />
+
+            <ImageView
+                android:id="@+id/utcPlus3CheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/utcPlus3_textview"
+                app:layout_constraintBottom_toBottomOf="@id/utcPlus3_textview"
+                />
+
+            <TextView
+                android:id="@+id/utcMinus1_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="UTC-1:00"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/utcPlus3_textview"
+                />
+
+            <ImageView
+                android:id="@+id/utcMinus1CheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/utcMinus1_textview"
+                app:layout_constraintBottom_toBottomOf="@id/utcMinus1_textview"
+                />
+
+            <TextView
+                android:id="@+id/utcMinus2_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="UTC-2:00"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/utcMinus1_textview"
+                />
+
+            <ImageView
+                android:id="@+id/utcMinus2CheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/utcMinus2_textview"
+                app:layout_constraintBottom_toBottomOf="@id/utcMinus2_textview"
+                />
+
+            <TextView
+                android:id="@+id/utcMinus3_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="UTC-3:00"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/utcMinus2_textview"
+                />
+
+            <ImageView
+                android:id="@+id/utcMinus3CheckBox_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_box_blank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/utcMinus3_textview"
+                app:layout_constraintBottom_toBottomOf="@id/utcMinus3_textview"
+                />
+
+            <FrameLayout
+                android:id="@+id/applyFilterButton_frameLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:paddingHorizontal="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/bg_button_4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/utcMinus3_textview"
+                app:layout_constraintVertical_bias="1.0">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Show results"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/resetFilterButton_frameLayout"
+                android:layout_width="118dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_button_3"
+                app:layout_constraintTop_toTopOf="@id/applyFilterButton_frameLayout"
+                app:layout_constraintBottom_toBottomOf="@id/applyFilterButton_frameLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Reset"
+                    />
+
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/languageDialog_constraintLayout"

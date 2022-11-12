@@ -3,6 +3,7 @@ package com.othadd.hngmobiletask3
 import androidx.lifecycle.*
 import com.othadd.hngmobiletask3.models.Country
 import com.othadd.hngmobiletask3.models.CountryAlphabetGroup
+import com.othadd.hngmobiletask3.models.FilterHolder
 import com.othadd.hngmobiletask3.models.UICountry
 import com.othadd.hngmobiletask3.network.NetworkApi
 import com.othadd.hngmobiletask3.util.toUICountries
@@ -27,7 +28,31 @@ class ExploreViewModel : ViewModel() {
     private var _languageTag = MutableLiveData<String>()
     val languageTag: LiveData<String> get() = _languageTag
 
+    private var _filters = MutableLiveData<List<FilterHolder>>()
+    val filters: LiveData<List<FilterHolder>> get() = _filters
 
+    private val selectedFilters = mutableListOf<FilterHolder>()
+
+
+
+    fun updateSelectedFilters(filter: FilterHolder){
+        if (selectedFilters.contains(filter)) selectedFilters.remove(filter) else selectedFilters.add(filter)
+    }
+
+    fun applySelectedFilters(){
+        val filteredCountries = FilterHolder.filterList(countriesStore, selectedFilters)
+        populateRecyclerviewList(filteredCountries)
+        selectedFilters.clear()
+    }
+
+    fun prepFilteration(){
+        selectedFilters.clear()
+        selectedFilters.addAll(_filters.value!!)
+    }
+
+    fun suspendFilteration(){
+        selectedFilters.clear()
+    }
 
     fun setSelectedCountry(name: String) {
         _selectedCountry.value = countriesStore.find { it.name == name }

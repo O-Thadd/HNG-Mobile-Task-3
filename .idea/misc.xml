@@ -7,6 +7,8 @@
         <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/drawable/app_logo_explore.xml" value="0.1395" />
         <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/drawable/bg_button.xml" value="0.1395" />
         <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/drawable/bg_button_2.xml" value="0.16" />
+        <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/drawable/bg_button_3.xml" value="0.16" />
+        <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/drawable/bg_button_4.xml" value="0.16" />
         <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/drawable/bg_circle.xml" value="0.1395" />
         <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/drawable/bg_circle_white.xml" value="0.16" />
         <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/drawable/bg_circle_white_transparent.xml" value="0.1755" />
@@ -19,7 +21,7 @@
         <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/layout/alphabet_list_item.xml" value="0.33" />
         <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/layout/country_list_item.xml" value="0.33" />
         <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/layout/fragment_detail.xml" value="0.33" />
-        <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/thadd/AndroidStudioProjects/HNGMobileTask3/app/src/main/res/layout/fragment_home.xml" value="0.22" />
       </map>
     </option>
   </component>
