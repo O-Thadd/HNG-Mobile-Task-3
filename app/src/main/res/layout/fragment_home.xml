@@ -111,6 +111,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_button"
             android:padding="8dp"
+            android:onClick="@{() -> homeFragment.navigateToDetailsFragment()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/languageButton_linearLayout"
             app:layout_constraintBottom_toBottomOf="@id/languageButton_linearLayout"

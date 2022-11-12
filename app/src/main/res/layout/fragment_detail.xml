@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".DetailFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.othadd.hngmobiletask3.ExploreViewModel" />
+
+        <variable
+            name="detailFragment"
+            type="com.othadd.hngmobiletask3.DetailFragment" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/headingCountryName_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/axiforma_extra_bold"
+            android:text="@{viewModel.selectedCountry.name}"
+            android:textColor="@color/explore_black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Nigeria" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/bigFlag_imageView"
+            android:layout_width="380dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test_flag"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/headingCountryName_textView"
+            app:shapeAppearance="@style/Image.Round"
+            tools:src="@drawable/test_flag" />
+
+        <FrameLayout
+            android:id="@+id/forwardButton_linearLayout"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_button_2"
+            app:layout_constraintBottom_toBottomOf="@id/bigFlag_imageView"
+            app:layout_constraintStart_toStartOf="@id/bigFlag_imageView"
+            app:layout_constraintTop_toTopOf="@id/bigFlag_imageView">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="3dp"
+                android:src="@drawable/ic_arrow_back_ios"
+                app:tint="@color/white" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/backwardButton_linearLayout"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_button_2"
+            app:layout_constraintBottom_toBottomOf="@id/bigFlag_imageView"
+            app:layout_constraintEnd_toEndOf="@id/bigFlag_imageView"
+            app:layout_constraintTop_toTopOf="@id/bigFlag_imageView">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="2dp"
+                android:src="@drawable/ic_arrow_forward_ios"
+                app:tint="@color/white" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/bigFlag_imageView"
+            app:layout_constraintEnd_toEndOf="@id/bigFlag_imageView"
+            app:layout_constraintStart_toStartOf="@id/bigFlag_imageView">
+
+            <View
+                android:id="@+id/indicator1_view"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/bg_circle_white_transparent" />
+
+            <View
+                android:id="@+id/indicator2_view"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/bg_circle_white" />
+
+        </LinearLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bigFlag_imageView">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/capital_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Capital: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/capitalValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    app:layout_constraintBottom_toBottomOf="@id/capital_textView"
+                    app:layout_constraintStart_toEndOf="@id/capital_textView"
+                    app:layout_constraintTop_toTopOf="@id/capital_textView"
+                    tools:text="Capital" />
+
+                <TextView
+                    android:id="@+id/population_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Population: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/capitalValue_textView" />
+
+                <TextView
+                    android:id="@+id/populationValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="Population"
+                    app:layout_constraintBottom_toBottomOf="@id/population_textView"
+                    app:layout_constraintStart_toEndOf="@id/population_textView"
+                    app:layout_constraintTop_toTopOf="@id/population_textView" />
+
+                <TextView
+                    android:id="@+id/area_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Area: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/populationValue_textView" />
+
+                <TextView
+                    android:id="@+id/areaValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="Area"
+                    app:layout_constraintBottom_toBottomOf="@id/area_textView"
+                    app:layout_constraintStart_toEndOf="@id/area_textView"
+                    app:layout_constraintTop_toTopOf="@id/area_textView" />
+
+                <TextView
+                    android:id="@+id/continent_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Continent: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/areaValue_textView" />
+
+                <TextView
+                    android:id="@+id/continentValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="continent"
+                    app:layout_constraintBottom_toBottomOf="@id/continent_textView"
+                    app:layout_constraintStart_toEndOf="@id/continent_textView"
+                    app:layout_constraintTop_toTopOf="@id/continent_textView" />
+
+                <TextView
+                    android:id="@+id/landLocked_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="LandLocked: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/continentValue_textView" />
+
+                <TextView
+                    android:id="@+id/landLockedValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="landLocked"
+                    app:layout_constraintBottom_toBottomOf="@id/landLocked_textView"
+                    app:layout_constraintStart_toEndOf="@id/landLocked_textView"
+                    app:layout_constraintTop_toTopOf="@id/landLocked_textView" />
+
+                <TextView
+                    android:id="@+id/independence_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Independence: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/landLockedValue_textView" />
+
+                <TextView
+                    android:id="@+id/independenceValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="independence"
+                    app:layout_constraintBottom_toBottomOf="@id/independence_textView"
+                    app:layout_constraintStart_toEndOf="@id/independence_textView"
+                    app:layout_constraintTop_toTopOf="@id/independence_textView" />
+
+                <TextView
+                    android:id="@+id/uNMember_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="UN Member: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/independenceValue_textView" />
+
+                <TextView
+                    android:id="@+id/uNMemberValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="uNMember"
+                    app:layout_constraintBottom_toBottomOf="@id/uNMember_textView"
+                    app:layout_constraintStart_toEndOf="@id/uNMember_textView"
+                    app:layout_constraintTop_toTopOf="@id/uNMember_textView" />
+
+                <TextView
+                    android:id="@+id/region_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Region: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/uNMemberValue_textView" />
+
+                <TextView
+                    android:id="@+id/regionValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="region"
+                    app:layout_constraintBottom_toBottomOf="@id/region_textView"
+                    app:layout_constraintStart_toEndOf="@id/region_textView"
+                    app:layout_constraintTop_toTopOf="@id/region_textView" />
+
+                <TextView
+                    android:id="@+id/subregion_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Sub-Region: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/regionValue_textView" />
+
+                <TextView
+                    android:id="@+id/subregionValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="subregion"
+                    app:layout_constraintBottom_toBottomOf="@id/subregion_textView"
+                    app:layout_constraintStart_toEndOf="@id/subregion_textView"
+                    app:layout_constraintTop_toTopOf="@id/subregion_textView" />
+
+                <TextView
+                    android:id="@+id/languages_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Languages: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/subregionValue_textView" />
+
+                <TextView
+                    android:id="@+id/languagesValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="languages"
+                    app:layout_constraintBottom_toBottomOf="@id/languages_textView"
+                    app:layout_constraintStart_toEndOf="@id/languages_textView"
+                    app:layout_constraintTop_toTopOf="@id/languages_textView" />
+
+                <TextView
+                    android:id="@+id/currency_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Currency: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/languagesValue_textView" />
+
+                <TextView
+                    android:id="@+id/currencyValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="currency"
+                    app:layout_constraintBottom_toBottomOf="@id/currency_textView"
+                    app:layout_constraintStart_toEndOf="@id/currency_textView"
+                    app:layout_constraintTop_toTopOf="@id/currency_textView" />
+
+                <TextView
+                    android:id="@+id/timezone_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Timezone: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/currencyValue_textView" />
+
+                <TextView
+                    android:id="@+id/timezoneValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="timezone"
+                    app:layout_constraintBottom_toBottomOf="@id/timezone_textView"
+                    app:layout_constraintStart_toEndOf="@id/timezone_textView"
+                    app:layout_constraintTop_toTopOf="@id/timezone_textView" />
+
+                <TextView
+                    android:id="@+id/diallingCode_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Dialling Code: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/timezoneValue_textView" />
+
+                <TextView
+                    android:id="@+id/diallingCodeValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="diallingCode"
+                    app:layout_constraintBottom_toBottomOf="@id/diallingCode_textView"
+                    app:layout_constraintStart_toEndOf="@id/diallingCode_textView"
+                    app:layout_constraintTop_toTopOf="@id/diallingCode_textView" />
+
+                <TextView
+                    android:id="@+id/drivingSide_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/axiforma_semi_bold"
+                    android:text="Driving Side: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/diallingCodeValue_textView" />
+
+                <TextView
+                    android:id="@+id/drivingSideValue_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/axiforma_light"
+                    android:text="drivingSide"
+                    app:layout_constraintBottom_toBottomOf="@id/drivingSide_textView"
+                    app:layout_constraintStart_toEndOf="@id/drivingSide_textView"
+                    app:layout_constraintTop_toTopOf="@id/drivingSide_textView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

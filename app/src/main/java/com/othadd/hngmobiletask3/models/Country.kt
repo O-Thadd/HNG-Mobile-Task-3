@@ -14,12 +14,13 @@ data class Country(val json: JSONObject) {
     lateinit var capital: String
     var population: Long = 0
     var area: Long = 0
+    lateinit var continent: String
     lateinit var landLocked: String
     lateinit var independence: String
     lateinit var memberOfUN: String
     lateinit var region: String
     lateinit var subRegion: String
-    private val languages = mutableListOf<String>()
+    val languages = mutableListOf<String>()
     lateinit var currency: String
     lateinit var timezone: String
     lateinit var dialingCode: String
@@ -69,6 +70,8 @@ data class Country(val json: JSONObject) {
         population = json.getLong("population")
 
         area = json.getLong("area")
+
+        continent = json.getJSONArray("continents").getString(0)
 
         landLocked = json.getString("landlocked")
 
@@ -120,7 +123,6 @@ data class Country(val json: JSONObject) {
             } catch (e: Exception) {
                 NA
             }
-
 
         val carJSONObject = json.getJSONObject("car")
         drivingSide = carJSONObject.getString("side")

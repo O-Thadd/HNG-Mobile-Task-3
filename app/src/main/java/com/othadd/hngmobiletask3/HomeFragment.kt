@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.othadd.hngmobiletask3.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
     private val sharedViewModel: ExploreViewModel by activityViewModels { ExploreViewModelFactory() }
-
     private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
@@ -20,7 +20,10 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        val adapter = CountryRecyclerAdapter()
+        val adapter = CountryRecyclerAdapter{
+            sharedViewModel.setSelectedCountry(it)
+            navigateToDetailsFragment()
+        }
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -30,6 +33,10 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    fun navigateToDetailsFragment(){
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment())
     }
 
 }

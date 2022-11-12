@@ -10,7 +10,7 @@ import com.othadd.hngmobiletask3.models.UICountry
 const val ALPHABET = 0
 const val COUNTRY = 1
 
-class CountryRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CountryRecyclerAdapter(val onItemClick: (String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var dataList = mutableListOf<Any>()
     fun submitList(dataList: List<Any>) {
@@ -29,7 +29,10 @@ class CountryRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(val item = dataList[position]){
             is String -> (holder as AlphabetViewHolder).bind(item)
-            is UICountry -> (holder as CountryViewHolder).bind(item)
+            is UICountry -> {
+                (holder as CountryViewHolder).bind(item)
+                holder.itemView.setOnClickListener { onItemClick(item.name) }
+            }
         }
     }
 

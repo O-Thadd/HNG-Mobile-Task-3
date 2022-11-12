@@ -14,8 +14,16 @@ class ExploreViewModel: ViewModel() {
     private var _countriesForRecyclerView = MutableLiveData<List<Any>>()
     val countriesForRecyclerView: LiveData<List<Any>> get() = _countriesForRecyclerView
 
-//    private val countriesForRecyclerview = mutableListOf<Any>()
+    private var _selectedCountry = MutableLiveData<Country>()
+    val selectedCountry: LiveData<Country> get() = _selectedCountry
 
+    private val countriesStore = mutableListOf<Country>()
+
+    fun setSelectedCountry(name: String){
+        _selectedCountry.value = countriesStore.find { it.name == name }
+    }
+
+//    private val countriesForRecyclerview = mutableListOf<Any>()
 
 
     init {
@@ -23,6 +31,10 @@ class ExploreViewModel: ViewModel() {
             val countriesJsonString = NetworkApi.retrofitService.getAllCountries()
             val countriesJsonArray = JSONArray(countriesJsonString)
             val countries = parseJsonIntoCountries(countriesJsonArray)
+
+            // save countries to field
+            countriesStore.addAll(countries)
+
             val uiCountries = countries.toUICountries()
             val countryGroupsByAlphabet = sortCountriesIntoAlphabetGroups(uiCountries)
             populateListForRecyclerView(countryGroupsByAlphabet)

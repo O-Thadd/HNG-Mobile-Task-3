@@ -13,4 +13,5 @@
     <color name="explore_grey">#F2F4F7</color>
     <color name="explore_light_blue">#A9B8D4</color>
     <color name="explore_grey2">#667085</color>
+    <color name="explore_white_transparent">#4DFFFFFF</color>
 </resources>
