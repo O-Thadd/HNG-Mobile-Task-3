@@ -19,32 +19,34 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        >
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/appName_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Explore"
-            android:textSize="26sp"
-            android:textColor="@color/explore_blue"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/elsie_swash_caps_black"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:text="Explore"
+            android:textColor="@color/explore_blue"
+            android:textSize="26sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:layout_width="4.78dp"
             android:layout_height="4.73dp"
-            android:background="@drawable/bg_circle"
             android:layout_marginBottom="6dp"
+            android:background="@drawable/bg_circle"
             app:layout_constraintBottom_toBottomOf="@id/appName_textView"
-            app:layout_constraintStart_toEndOf="@id/appName_textView"/>
+            app:layout_constraintStart_toEndOf="@id/appName_textView" />
 
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:src="@drawable/ic_light_mode"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -54,28 +56,28 @@
             android:id="@+id/searchBar_linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:background="@drawable/bg_search_bar"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/bg_search_bar"
+            android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appName_textView">
 
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_search"/>
+                android:src="@drawable/ic_search" />
 
             <EditText
                 android:id="@+id/search_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Search Country"
-                android:textSize="16sp"
-                android:textAlignment="center"
                 android:background="@android:color/transparent"
-                />
+                android:hint="Search Country"
+                android:textAlignment="center"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -83,9 +85,11 @@
             android:id="@+id/languageButton_linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> homeFragment.showLanguagesDialog()}"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/bg_button"
             android:padding="8dp"
-            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/searchBar_linearLayout">
 
@@ -96,13 +100,14 @@
                 app:tint="@color/explore_black" />
 
             <TextView
+                android:id="@+id/languageIndicator_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="EN"
-                android:layout_marginStart="4dp"
                 android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/axiforma_medium"
                 android:textColor="@color/explore_black"
-                android:fontFamily="@font/axiforma_medium"/>
+                tools:text="EN" />
 
         </LinearLayout>
 
@@ -110,13 +115,13 @@
             android:id="@+id/filterButton_linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/bg_button"
-            android:padding="8dp"
             android:onClick="@{() -> homeFragment.navigateToDetailsFragment()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/languageButton_linearLayout"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/languageButton_linearLayout"
-            >
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/languageButton_linearLayout">
 
             <ImageView
                 android:layout_width="24dp"
@@ -127,26 +132,195 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Filter"
-                android:layout_marginStart="4dp"
                 android:layout_gravity="center"
-                android:textColor="@color/explore_black"
-                android:fontFamily="@font/axiforma_medium"/>
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="Filter"
+                android:textColor="@color/explore_black" />
 
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/country_recyclerView"
+            dataList="@{viewModel.countriesForRecyclerView}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/country_list_item"
-            dataList="@{viewModel.countriesForRecyclerView}"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/languageButton_linearLayout"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/languageButton_linearLayout"
+            tools:listitem="@layout/country_list_item" />
+
+        <View
+            android:id="@+id/dialogOverlay_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.3"
+            android:visibility="gone"
+            android:onClick="@{() -> homeFragment.doNothing()}"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/languageDialog_constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/bg_dialog"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/languagesHeading_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_bold"
+                android:text="Languages"
+                android:textColor="@color/explore_black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/langugagesDialogCloseButton_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_close"
+                android:onClick="@{() -> homeFragment.hideLanguagesDialog()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/english_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> viewModel.setLanguage(1)}"
+                android:text="English"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/languagesHeading_textView" 
+                />
+            
+            <ImageView
+                android:id="@+id/englishRadioButton_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_radio_button_unchecked"
+                android:onClick="@{() -> viewModel.setLanguage(1)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/english_textview"
+                app:layout_constraintBottom_toBottomOf="@id/english_textview"
+                />
+
+            <TextView
+                android:id="@+id/german_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="Deutsch"
+                android:onClick="@{() -> viewModel.setLanguage(2)}"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@id/english_textview"
+                app:layout_constraintTop_toBottomOf="@id/english_textview"
+                />
+
+            <ImageView
+                android:id="@+id/germanRadioButton_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_radio_button_unchecked"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:onClick="@{() -> viewModel.setLanguage(2)}"
+                app:layout_constraintTop_toTopOf="@id/german_textview"
+                app:layout_constraintBottom_toBottomOf="@id/german_textview"
+                />
+
+            <TextView
+                android:id="@+id/french_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="Français"
+                android:onClick="@{() -> viewModel.setLanguage(3)}"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@id/english_textview"
+                app:layout_constraintTop_toBottomOf="@id/german_textview"
+                />
+
+            <ImageView
+                android:id="@+id/frenchRadioButton_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.setLanguage(3)}"
+                android:src="@drawable/ic_radio_button_unchecked"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/french_textview"
+                app:layout_constraintBottom_toBottomOf="@id/french_textview"
+                />
+
+            <TextView
+                android:id="@+id/italian_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="Italiana"
+                android:onClick="@{() -> viewModel.setLanguage(4)}"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@id/english_textview"
+                app:layout_constraintTop_toBottomOf="@id/french_textview"
+                />
+
+            <ImageView
+                android:id="@+id/italianRadioButton_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.setLanguage(4)}"
+                android:src="@drawable/ic_radio_button_unchecked"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/italian_textview"
+                app:layout_constraintBottom_toBottomOf="@id/italian_textview"
+                />
+
+            <TextView
+                android:id="@+id/spanish_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.setLanguage(5)}"
+                android:fontFamily="@font/axiforma_medium"
+                android:text="Española"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@id/italian_textview"
+                app:layout_constraintTop_toBottomOf="@id/italian_textview"
+                />
+
+            <ImageView
+                android:id="@+id/spanishRadioButton_imageView"
+                android:layout_width="wrap_content"
+                android:onClick="@{() -> viewModel.setLanguage(5)}"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_radio_button_unchecked"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/spanish_textview"
+                app:layout_constraintBottom_toBottomOf="@id/spanish_textview"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

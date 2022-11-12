@@ -37,7 +37,21 @@ class ExploreViewModel : ViewModel() {
         _topImageGroupPosition.value = if (_topImageGroupPosition.value == 1) 2 else 1
     }
 
+    fun setLanguage(languageId: Int){
+        when(languageId){
+            1 -> _languageTag.value = Languages.ENGLISH.tag
+            2 -> _languageTag.value = Languages.GERMAN.tag
+            3 -> _languageTag.value = Languages.FRENCH.tag
+            4 -> _languageTag.value = Languages.ITALIAN.tag
+            5 -> _languageTag.value = Languages.SPANISH.tag
+        }
+        populateRecyclerviewList(currentCountriesList)
+    }
+
+
+
     private fun populateRecyclerviewList(countries: List<Country>){
+        currentCountriesList = countries
         val uiCountries = countries.toUICountries(_languageTag.value ?: Languages.ENGLISH.tag)
         val countryAlphabetGroup = sortCountriesIntoAlphabetGroups(uiCountries)
         populateRecyclerViewListInOrder(countryAlphabetGroup)
