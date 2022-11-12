@@ -61,6 +61,7 @@
             android:layout_height="32dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/bg_button_2"
+            android:onClick="@{() -> viewModel.alterTopImageGroupPosition()}"
             app:layout_constraintBottom_toBottomOf="@id/bigFlag_imageView"
             app:layout_constraintStart_toStartOf="@id/bigFlag_imageView"
             app:layout_constraintTop_toTopOf="@id/bigFlag_imageView">
@@ -81,6 +82,7 @@
             android:layout_height="32dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/bg_button_2"
+            android:onClick="@{() -> viewModel.alterTopImageGroupPosition()}"
             app:layout_constraintBottom_toBottomOf="@id/bigFlag_imageView"
             app:layout_constraintEnd_toEndOf="@id/bigFlag_imageView"
             app:layout_constraintTop_toTopOf="@id/bigFlag_imageView">
@@ -109,14 +111,14 @@
                 android:layout_width="8dp"
                 android:layout_height="8dp"
                 android:layout_marginEnd="2dp"
-                android:background="@drawable/bg_circle_white_transparent" />
+                android:background="@drawable/bg_circle_blue_transparent" />
 
             <View
                 android:id="@+id/indicator2_view"
                 android:layout_width="8dp"
                 android:layout_height="8dp"
                 android:layout_marginStart="2dp"
-                android:background="@drawable/bg_circle_white" />
+                android:background="@drawable/bg_circle_blue" />
 
         </LinearLayout>
 

@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import coil.load
 import com.othadd.hngmobiletask3.databinding.FragmentDetailBinding
 import com.othadd.hngmobiletask3.models.Country
 import com.othadd.hngmobiletask3.models.NA
@@ -39,6 +42,45 @@ class DetailFragment : Fragment() {
                 return@observe
             }
             setTextViews(it)
+        }
+
+        sharedViewModel.topImageGroupPosition.observe(viewLifecycleOwner) {
+            if (sharedViewModel.selectedCountry.value == null) {
+                return@observe
+            }
+
+            val country = sharedViewModel.selectedCountry.value!!
+
+            when (it) {
+                // flag
+                1 -> {
+                    binding.apply {
+                        val imgUri = country.flagURL.toUri().buildUpon().scheme("https").build()
+                        bigFlagImageView.load(imgUri) {
+                            placeholder(R.drawable.loading_animation)
+                            error(R.drawable.ic_broken_image)
+                        }
+                        bigFlagImageView.scaleType = ImageView.ScaleType.CENTER_CROP
+                        indicator1View.setBackgroundResource(R.drawable.bg_circle_blue)
+                        indicator2View.setBackgroundResource(R.drawable.bg_circle_blue_transparent)
+                    }
+                }
+
+                // coat of arm
+                2 -> {
+                    binding.apply {
+                        val imgUri =
+                            country.coatOfArmURL.toUri().buildUpon().scheme("https").build()
+                        bigFlagImageView.load(imgUri) {
+                            placeholder(R.drawable.loading_animation)
+                            error(R.drawable.ic_broken_image)
+                        }
+                        bigFlagImageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                        indicator2View.setBackgroundResource(R.drawable.bg_circle_blue)
+                        indicator1View.setBackgroundResource(R.drawable.bg_circle_blue_transparent)
+                    }
+                }
+            }
         }
     }
 
@@ -114,11 +156,10 @@ class DetailFragment : Fragment() {
             }
 
             // currency
-            if (it.currency == NA){
+            if (it.currency == NA) {
                 currencyTextView.visibility = View.GONE
                 currencyValueTextView.visibility = View.GONE
-            }
-            else{
+            } else {
                 currencyValueTextView.text = it.currency
             }
 
@@ -126,11 +167,10 @@ class DetailFragment : Fragment() {
             timezoneValueTextView.text = it.timezone
 
             //dialling code
-            if (it.dialingCode == NA){
+            if (it.dialingCode == NA) {
                 diallingCodeTextView.visibility = View.GONE
                 diallingCodeValueTextView.visibility = View.GONE
-            }
-            else{
+            } else {
                 diallingCodeValueTextView.text = it.dialingCode
             }
 

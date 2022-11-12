@@ -26,8 +26,9 @@ data class Country(val json: JSONObject) {
     lateinit var dialingCode: String
     lateinit var drivingSide: String
 
-    fun toUICountry(): UICountry{
-        return UICountry(name, capital, flagURL)
+    fun toUICountry(languageTag: String): UICountry{
+        val appropriateNameForLanguage = translatedNames[languageTag] ?: name
+        return UICountry(appropriateNameForLanguage, capital, flagURL)
     }
 
     init {

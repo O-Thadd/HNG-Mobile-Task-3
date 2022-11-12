@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.othadd.hngmobiletask3.databinding.FragmentHomeBinding
@@ -33,6 +34,14 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.searchEditText.addTextChangedListener {
+            sharedViewModel.searchCountries(it.toString())
+        }
     }
 
     fun navigateToDetailsFragment(){

@@ -68,6 +68,7 @@
                 android:src="@drawable/ic_search"/>
 
             <EditText
+                android:id="@+id/search_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Search Country"
