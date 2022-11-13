@@ -11,3 +11,4 @@ fun MutableList<Country>.toUICountries(languageTag: String): List<UICountry>{
 fun List<Country>.toUICountries(languageTag: String): List<UICountry>{
     return this.map { it.toUICountry(languageTag) }
 }
+

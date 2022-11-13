@@ -3,9 +3,10 @@ package com.othadd.hngmobiletask3
 import androidx.lifecycle.*
 import com.othadd.hngmobiletask3.models.Country
 import com.othadd.hngmobiletask3.models.CountryAlphabetGroup
-import com.othadd.hngmobiletask3.models.FilterHolder
 import com.othadd.hngmobiletask3.models.UICountry
 import com.othadd.hngmobiletask3.network.NetworkApi
+import com.othadd.hngmobiletask3.util.Filter
+import com.othadd.hngmobiletask3.util.Filter.Companion.filterCountries
 import com.othadd.hngmobiletask3.util.toUICountries
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -28,30 +29,68 @@ class ExploreViewModel : ViewModel() {
     private var _languageTag = MutableLiveData<String>()
     val languageTag: LiveData<String> get() = _languageTag
 
-    private var _filters = MutableLiveData<List<FilterHolder>>()
-    val filters: LiveData<List<FilterHolder>> get() = _filters
+    private var _filters = MutableLiveData<Pair<List<String>, List<String>>>()
+    val filters: LiveData<Pair<List<String>, List<String>>> get() = _filters
 
-    private val selectedFilters = mutableListOf<FilterHolder>()
+    private val selectedFilters = mutableListOf<String>()
+
+    private var _hideDialogs = MutableLiveData<Boolean>()
+    val hideDialogs: LiveData<Boolean> get() = _hideDialogs
 
 
 
-    fun updateSelectedFilters(filter: FilterHolder){
-        if (selectedFilters.contains(filter)) selectedFilters.remove(filter) else selectedFilters.add(filter)
+    fun updateSelectedFilters(filter: String): Boolean {
+        return if (selectedFilters.contains(filter)) {
+            selectedFilters.remove(filter)
+            false
+        } else {
+            selectedFilters.add(filter)
+            true
+        }
     }
 
-    fun applySelectedFilters(){
-        val filteredCountries = FilterHolder.filterList(countriesStore, selectedFilters)
-        populateRecyclerviewList(filteredCountries)
+    private fun applyFilters(filters: MutableList<String> = selectedFilters){
+        hideDialogs()
+        if (filters.isEmpty()){
+            populateRecyclerviewList(countriesStore)
+        }
+        else{
+            val filteredCountries = filterCountries(countriesStore, filters)
+            populateRecyclerviewList(filteredCountries)
+        }
+
+        updateFiltersLiveData(filters.toList())
+        filters.clear()
+    }
+
+    fun applyFilters(){
+        applyFilters(selectedFilters)
+    }
+
+    fun resetFilters(){
         selectedFilters.clear()
+        applyFilters(selectedFilters)
+    }
+
+    private fun updateFiltersLiveData(filters: List<String>){
+        val otherFilters = Filter.getOtherFilters(filters)
+        _filters.value = Pair(filters, otherFilters)
+    }
+
+    private fun hideDialogs() {
+        // exact value not relevant. Purpose is just to trigger action
+        val currentValue = _hideDialogs.value!!
+        _hideDialogs.value = !currentValue
     }
 
     fun prepFilteration(){
         selectedFilters.clear()
-        selectedFilters.addAll(_filters.value!!)
+        selectedFilters.addAll(_filters.value!!.first)
     }
 
     fun suspendFilteration(){
         selectedFilters.clear()
+        updateFiltersLiveData(_filters.value!!.first.toList())
     }
 
     fun setSelectedCountry(name: String) {
@@ -85,16 +124,12 @@ class ExploreViewModel : ViewModel() {
     fun searchCountries(countrySubstring: String){
 
         if (countrySubstring.isBlank()){
-            populateRecyclerviewList(countriesStore)
+            applyFilters(_filters.value!!.first.toMutableList())
             return
         }
 
-        val matchedCountries = mutableListOf<Country>()
-        for (country in countriesStore){
-            if (country.name.startsWith(countrySubstring, true)){
-                matchedCountries.add(country)
-            }
-        }
+        val matchedCountries = currentCountriesList.filter { it.name.startsWith(countrySubstring, true) }
+
         populateRecyclerviewList(matchedCountries.toList())
     }
 
@@ -155,6 +190,8 @@ class ExploreViewModel : ViewModel() {
             _languageTag.value = Languages.ENGLISH.tag
             getCountriesParseAndPopulateHomeScreen()
             _topImageGroupPosition.value = 1
+            updateFiltersLiveData(listOf())
+            _hideDialogs.value = false
         }
     }
 }

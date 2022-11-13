@@ -3,7 +3,6 @@ package com.othadd.hngmobiletask3
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +12,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.othadd.hngmobiletask3.databinding.FragmentHomeBinding
+import com.othadd.hngmobiletask3.util.*
 
 class HomeFragment : Fragment() {
     private val sharedViewModel: ExploreViewModel by activityViewModels { ExploreViewModelFactory() }
@@ -44,6 +45,7 @@ class HomeFragment : Fragment() {
     private lateinit var utcMinus1CheckBox: ImageView
     private lateinit var utcMinus2CheckBox: ImageView
     private lateinit var utcMinus3CheckBox: ImageView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +96,7 @@ class HomeFragment : Fragment() {
 
         }
 
-        val adapter = CountryRecyclerAdapter{
+        val adapter = CountryRecyclerAdapter {
             sharedViewModel.setSelectedCountry(it)
             navigateToDetailsFragment()
         }
@@ -109,22 +111,46 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        binding.searchEditText.addTextChangedListener{
+            sharedViewModel.searchCountries(it.toString())
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.searchEditText.addTextChangedListener {
-            sharedViewModel.searchCountries(it.toString())
+        sharedViewModel.languageTag.observe(viewLifecycleOwner) {
+            updateLanguagesDialogState(it)
         }
 
-        sharedViewModel.languageTag.observe(viewLifecycleOwner){
-            updateLanguagesDialogState(it)
+        sharedViewModel.hideDialogs.observe(viewLifecycleOwner) {
+            hideLanguagesDialog()
+            hideFilterDialog()
+        }
+
+        //debug
+        sharedViewModel.countriesForRecyclerView.observe(viewLifecycleOwner) {
+            binding.debugTotalNumberOfCountriesOnDisplayTextView.text = it.size.toString()
+        }
+
+        sharedViewModel.filters.observe(viewLifecycleOwner){
+            for (filter in it.first){
+                updateFilterCheckBoxes(filter, true)
+            }
+
+            for (filter in it.second){
+                updateFilterCheckBoxes(filter, false)
+            }
         }
     }
 
     private fun updateLanguagesDialogState(it: String) {
         hideDialog(languagesDialog)
         clearAllRadioButtonsSelection()
-        when(it){
+        when (it) {
             Languages.ENGLISH.tag -> {
                 englishRadioButton.setImageResource(R.drawable.ic_radio_button_checked)
                 languagesIndicator.text = "ENG"
@@ -159,20 +185,40 @@ class HomeFragment : Fragment() {
         spanishRadioButton.setImageResource(R.drawable.ic_radio_button_unchecked)
     }
 
-    fun filterCheckBoxClicked(code: String){
-
+    fun filterCheckBoxClicked(code: String) {
+        val filterAdded = sharedViewModel.updateSelectedFilters(code)
+        updateFilterCheckBoxes(code, filterAdded)
     }
 
-    private fun navigateToDetailsFragment(){
+    private fun updateFilterCheckBoxes(code: String, filterAdded: Boolean) {
+        when (code) {
+            AFRICA -> africaCheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+            ANTARCTICA -> antarticaCheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+            ASIA -> asiaCheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+            AUSTRALIA -> australiaCheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+            EUROPE -> europeCheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+            NORTH_AMERICA -> northAmericaCheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+            SOUTH_AMERICA -> southAmericaCheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+            UTC_PLUS_1 -> utcPlus1CheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+            UTC_PLUS_2 -> utcPlus2CheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+            UTC_PLUS_3 -> utcPlus3CheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+            UTC_MINUS_1 -> utcMinus1CheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+            UTC_MINUS_2 -> utcMinus2CheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+            UTC_MINUS_3 -> utcMinus3CheckBox.setImageResource(if (filterAdded) R.drawable.ic_check_box else R.drawable.ic_check_box_blank)
+        }
+    }
+
+    private fun navigateToDetailsFragment() {
         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment())
     }
 
-    private fun showDialog(dialog: ConstraintLayout){
+    private fun showDialog(dialog: ConstraintLayout) {
 
         backPressedCallback.isEnabled = true
         dialogOverlay.visibility = View.VISIBLE
 
-        val movePropertyValueHolder = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, 0f, -dialog.height.toFloat())
+        val movePropertyValueHolder =
+            PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, 0f, -dialog.height.toFloat())
         val transparencyValueHolder = PropertyValuesHolder.ofFloat(View.ALPHA, 1.0f)
         val animator = ObjectAnimator.ofPropertyValuesHolder(
             dialog,
@@ -196,21 +242,25 @@ class HomeFragment : Fragment() {
         animator.start()
     }
 
-    fun showLanguagesDialog(){
+    fun showLanguagesDialog() {
         showDialog(languagesDialog)
     }
 
-    fun hideLanguagesDialog(){
+    fun hideLanguagesDialog() {
         hideDialog(languagesDialog)
     }
 
-    fun showFilterDialog(){
+    fun showFilterDialog() {
         showDialog(filterDialog)
         sharedViewModel.prepFilteration()
     }
 
-    fun hideFilterDialog(){
+    fun hideFilterDialog() {
         hideDialog(filterDialog)
+    }
+
+    fun suspendFilteraion() {
+        hideFilterDialog()
         sharedViewModel.suspendFilteration()
     }
 

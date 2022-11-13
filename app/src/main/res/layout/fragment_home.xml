@@ -15,6 +15,9 @@
             name="homeFragment"
             type="com.othadd.hngmobiletask3.HomeFragment" />
 
+        <import alias="filter"
+            type="com.othadd.hngmobiletask3.util.FilterKt" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,10 +88,10 @@
             android:id="@+id/languageButton_linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> homeFragment.showLanguagesDialog()}"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/bg_button"
+            android:onClick="@{() -> homeFragment.showLanguagesDialog()}"
             android:padding="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/searchBar_linearLayout">
@@ -110,6 +113,16 @@
                 tools:text="EN" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/debug_totalNumberOfCountriesOnDisplay_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="250"
+            android:textSize="32sp"
+            app:layout_constraintStart_toEndOf="@id/languageButton_linearLayout"
+            app:layout_constraintTop_toTopOf="@id/languageButton_linearLayout"
+            />
 
         <LinearLayout
             android:id="@+id/filterButton_linearLayout"
@@ -159,9 +172,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:alpha="0.3"
-            android:visibility="gone"
-            android:onClick="@{() -> homeFragment.doNothing()}"
             android:background="@color/black"
+            android:onClick="@{() -> homeFragment.doNothing()}"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -176,8 +189,7 @@
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
-            >
+            app:layout_constraintTop_toBottomOf="parent">
 
             <TextView
                 android:id="@+id/filterHeading_textView"
@@ -194,9 +206,9 @@
                 android:id="@+id/filterDialogCloseButton_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.suspendFilteraion()}"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_close"
-                android:onClick="@{() -> homeFragment.hideFilterDialog()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -204,340 +216,337 @@
                 android:id="@+id/continentHeading_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/axiforma_bold"
                 android:text="Continent"
                 android:textSize="16sp"
-                android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/filterHeading_textView"
-                />
+                app:layout_constraintTop_toBottomOf="@id/filterHeading_textView" />
 
             <ImageView
                 android:id="@+id/continentDropDownButton_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_down"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/continentHeading_textview"
                 app:layout_constraintBottom_toBottomOf="@id/continentHeading_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/continentHeading_textview" />
 
             <TextView
                 android:id="@+id/africa_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.AFRICA)}"
                 android:text="Africa"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/continentHeading_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/continentHeading_textview" />
 
             <ImageView
                 android:id="@+id/africaCheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.AFRICA)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/africa_textview"
                 app:layout_constraintBottom_toBottomOf="@id/africa_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/africa_textview" />
 
             <TextView
                 android:id="@+id/antarctica_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.ANTARCTICA)}"
                 android:text="Antarctica"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/africa_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/africa_textview" />
 
             <ImageView
                 android:id="@+id/antarcticaCheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.ANTARCTICA)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/antarctica_textview"
                 app:layout_constraintBottom_toBottomOf="@id/antarctica_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/antarctica_textview" />
 
             <TextView
                 android:id="@+id/asia_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.ASIA)}"
                 android:text="Asia"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/antarctica_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/antarctica_textview" />
 
             <ImageView
                 android:id="@+id/asiaCheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.ASIA)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/asia_textview"
                 app:layout_constraintBottom_toBottomOf="@id/asia_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/asia_textview" />
 
             <TextView
                 android:id="@+id/australia_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/axiforma_medium"
-                android:text="Australis"
-                android:textSize="16sp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.AUSTRALIA)}"
+                android:text="Australia"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/asia_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/asia_textview" />
 
             <ImageView
                 android:id="@+id/australiaCheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.AUSTRALIA)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/australia_textview"
                 app:layout_constraintBottom_toBottomOf="@id/australia_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/australia_textview" />
 
             <TextView
                 android:id="@+id/europe_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.EUROPE)}"
                 android:text="Europe"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/australia_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/australia_textview" />
 
             <ImageView
                 android:id="@+id/europeCheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.EUROPE)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/europe_textview"
                 app:layout_constraintBottom_toBottomOf="@id/europe_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/europe_textview" />
 
             <TextView
                 android:id="@+id/northAmerica_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.NORTH_AMERICA)}"
                 android:text="North America"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/europe_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/europe_textview" />
 
             <ImageView
                 android:id="@+id/northAmericaCheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.NORTH_AMERICA)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/northAmerica_textview"
                 app:layout_constraintBottom_toBottomOf="@id/northAmerica_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/northAmerica_textview" />
 
             <TextView
                 android:id="@+id/southAmerica_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.SOUTH_AMERICA)}"
                 android:text="South America"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/northAmerica_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/northAmerica_textview" />
 
             <ImageView
                 android:id="@+id/southAmericaCheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.SOUTH_AMERICA)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/southAmerica_textview"
                 app:layout_constraintBottom_toBottomOf="@id/southAmerica_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/southAmerica_textview" />
 
             <TextView
                 android:id="@+id/timezoneHeading_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/axiforma_bold"
                 android:text="Time Zone"
                 android:textSize="16sp"
-                android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/southAmerica_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/southAmerica_textview" />
 
             <ImageView
                 android:id="@+id/timezoneDropDownButton_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_down"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/timezoneHeading_textview"
                 app:layout_constraintBottom_toBottomOf="@id/timezoneHeading_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/timezoneHeading_textview" />
 
             <TextView
                 android:id="@+id/utcPlus1_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.UTC_PLUS_1)}"
                 android:text="UTC+1:00"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/timezoneHeading_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/timezoneHeading_textview" />
 
             <ImageView
                 android:id="@+id/utcPlus1CheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.UTC_PLUS_1)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/utcPlus1_textview"
                 app:layout_constraintBottom_toBottomOf="@id/utcPlus1_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/utcPlus1_textview" />
 
             <TextView
                 android:id="@+id/utcPlus2_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.UTC_PLUS_2)}"
                 android:text="UTC+2:00"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/utcPlus1_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/utcPlus1_textview" />
 
             <ImageView
                 android:id="@+id/utcPlus2CheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.UTC_PLUS_2)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/utcPlus2_textview"
                 app:layout_constraintBottom_toBottomOf="@id/utcPlus2_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/utcPlus2_textview" />
 
             <TextView
                 android:id="@+id/utcPlus3_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.UTC_PLUS_3)}"
                 android:text="UTC+3:00"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/utcPlus2_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/utcPlus2_textview" />
 
             <ImageView
                 android:id="@+id/utcPlus3CheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.UTC_PLUS_3)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/utcPlus3_textview"
                 app:layout_constraintBottom_toBottomOf="@id/utcPlus3_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/utcPlus3_textview" />
 
             <TextView
                 android:id="@+id/utcMinus1_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.UTC_MINUS_1)}"
                 android:text="UTC-1:00"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/utcPlus3_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/utcPlus3_textview" />
 
             <ImageView
                 android:id="@+id/utcMinus1CheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.UTC_MINUS_1)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/utcMinus1_textview"
                 app:layout_constraintBottom_toBottomOf="@id/utcMinus1_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/utcMinus1_textview" />
 
             <TextView
                 android:id="@+id/utcMinus2_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.UTC_MINUS_2)}"
                 android:text="UTC-2:00"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/utcMinus1_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/utcMinus1_textview" />
 
             <ImageView
                 android:id="@+id/utcMinus2CheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.UTC_MINUS_2)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/utcMinus2_textview"
                 app:layout_constraintBottom_toBottomOf="@id/utcMinus2_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/utcMinus2_textview" />
 
             <TextView
                 android:id="@+id/utcMinus3_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.UTC_MINUS_3)}"
                 android:text="UTC-3:00"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/utcMinus2_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/utcMinus2_textview" />
 
             <ImageView
                 android:id="@+id/utcMinus3CheckBox_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.UTC_MINUS_3)}"
                 android:src="@drawable/ic_check_box_blank"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/utcMinus3_textview"
                 app:layout_constraintBottom_toBottomOf="@id/utcMinus3_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/utcMinus3_textview" />
 
             <FrameLayout
                 android:id="@+id/applyFilterButton_frameLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:paddingHorizontal="32dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/bg_button_4"
+                android:onClick="@{() -> viewModel.applyFilters()}"
+                android:paddingHorizontal="32dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/utcMinus3_textview"
@@ -558,20 +567,19 @@
                 android:id="@+id/resetFilterButton_frameLayout"
                 android:layout_width="118dp"
                 android:layout_height="48dp"
+                android:onClick="@{() -> viewModel.resetFilters()}"
                 android:background="@drawable/bg_button_3"
-                app:layout_constraintTop_toTopOf="@id/applyFilterButton_frameLayout"
                 app:layout_constraintBottom_toBottomOf="@id/applyFilterButton_frameLayout"
                 app:layout_constraintStart_toStartOf="parent"
-                >
+                app:layout_constraintTop_toTopOf="@id/applyFilterButton_frameLayout">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
                     android:layout_gravity="center"
                     android:fontFamily="@font/axiforma_semi_bold"
                     android:text="Reset"
-                    />
+                    android:textSize="16sp" />
 
             </FrameLayout>
 
@@ -586,8 +594,7 @@
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
-            >
+            app:layout_constraintTop_toBottomOf="parent">
 
             <TextView
                 android:id="@+id/languagesHeading_textView"
@@ -604,9 +611,9 @@
                 android:id="@+id/langugagesDialogCloseButton_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> homeFragment.hideLanguagesDialog()}"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_close"
-                android:onClick="@{() -> homeFragment.hideLanguagesDialog()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -614,62 +621,57 @@
                 android:id="@+id/english_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/axiforma_medium"
                 android:onClick="@{() -> viewModel.setLanguage(1)}"
                 android:text="English"
                 android:textSize="16sp"
-                android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/languagesHeading_textView" 
-                />
-            
+                app:layout_constraintTop_toBottomOf="@id/languagesHeading_textView" />
+
             <ImageView
                 android:id="@+id/englishRadioButton_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_radio_button_unchecked"
                 android:onClick="@{() -> viewModel.setLanguage(1)}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/english_textview"
+                android:src="@drawable/ic_radio_button_unchecked"
                 app:layout_constraintBottom_toBottomOf="@id/english_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/english_textview" />
 
             <TextView
                 android:id="@+id/german_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/axiforma_medium"
-                android:text="Deutsch"
-                android:onClick="@{() -> viewModel.setLanguage(2)}"
-                android:textSize="16sp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> viewModel.setLanguage(2)}"
+                android:text="Deutsch"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/english_textview"
-                app:layout_constraintTop_toBottomOf="@id/english_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/english_textview" />
 
             <ImageView
                 android:id="@+id/germanRadioButton_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_radio_button_unchecked"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:onClick="@{() -> viewModel.setLanguage(2)}"
-                app:layout_constraintTop_toTopOf="@id/german_textview"
+                android:src="@drawable/ic_radio_button_unchecked"
                 app:layout_constraintBottom_toBottomOf="@id/german_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/german_textview" />
 
             <TextView
                 android:id="@+id/french_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/axiforma_medium"
-                android:text="Français"
-                android:onClick="@{() -> viewModel.setLanguage(3)}"
-                android:textSize="16sp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> viewModel.setLanguage(3)}"
+                android:text="Français"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/english_textview"
-                app:layout_constraintTop_toBottomOf="@id/german_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/german_textview" />
 
             <ImageView
                 android:id="@+id/frenchRadioButton_imageView"
@@ -677,23 +679,21 @@
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewModel.setLanguage(3)}"
                 android:src="@drawable/ic_radio_button_unchecked"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/french_textview"
                 app:layout_constraintBottom_toBottomOf="@id/french_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/french_textview" />
 
             <TextView
                 android:id="@+id/italian_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/axiforma_medium"
-                android:text="Italiana"
-                android:onClick="@{() -> viewModel.setLanguage(4)}"
-                android:textSize="16sp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> viewModel.setLanguage(4)}"
+                android:text="Italiana"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/english_textview"
-                app:layout_constraintTop_toBottomOf="@id/french_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/french_textview" />
 
             <ImageView
                 android:id="@+id/italianRadioButton_imageView"
@@ -701,34 +701,31 @@
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewModel.setLanguage(4)}"
                 android:src="@drawable/ic_radio_button_unchecked"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/italian_textview"
                 app:layout_constraintBottom_toBottomOf="@id/italian_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/italian_textview" />
 
             <TextView
                 android:id="@+id/spanish_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.setLanguage(5)}"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
+                android:onClick="@{() -> viewModel.setLanguage(5)}"
                 android:text="Española"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="@id/italian_textview"
-                app:layout_constraintTop_toBottomOf="@id/italian_textview"
-                />
+                app:layout_constraintTop_toBottomOf="@id/italian_textview" />
 
             <ImageView
                 android:id="@+id/spanishRadioButton_imageView"
                 android:layout_width="wrap_content"
-                android:onClick="@{() -> viewModel.setLanguage(5)}"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.setLanguage(5)}"
                 android:src="@drawable/ic_radio_button_unchecked"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/spanish_textview"
                 app:layout_constraintBottom_toBottomOf="@id/spanish_textview"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/spanish_textview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
