@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Nigeria"
-                android:text="@{country.name}"
+                android:text="@{country.displayName}"
                 android:textColor="@color/explore_black"
                 android:fontFamily="@font/axiforma_medium"
                 android:layout_marginStart="4dp"

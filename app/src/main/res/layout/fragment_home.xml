@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:hint="Search Country"
+                android:hint="@string/search_country"
                 android:textAlignment="center"
                 android:textSize="16sp" />
 
@@ -148,7 +148,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="4dp"
                 android:fontFamily="@font/axiforma_medium"
-                android:text="Filter"
+                android:text="@string/filter"
                 android:textColor="@color/explore_black" />
 
         </LinearLayout>
@@ -196,7 +196,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/axiforma_bold"
-                android:text="Filter"
+                android:text="@string/filter"
                 android:textColor="@color/explore_black"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -218,7 +218,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/axiforma_bold"
-                android:text="Continent"
+                android:text="@string/continent"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/filterHeading_textView" />
@@ -239,7 +239,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
                 android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.AFRICA)}"
-                android:text="Africa"
+                android:text="@string/africa"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/continentHeading_textview" />
@@ -261,7 +261,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
                 android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.ANTARCTICA)}"
-                android:text="Antarctica"
+                android:text="@string/antarctica"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/africa_textview" />
@@ -283,7 +283,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
                 android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.ASIA)}"
-                android:text="Asia"
+                android:text="@string/asia"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/antarctica_textview" />
@@ -305,7 +305,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
                 android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.AUSTRALIA)}"
-                android:text="Australia"
+                android:text="@string/australia"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/asia_textview" />
@@ -327,7 +327,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
                 android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.EUROPE)}"
-                android:text="Europe"
+                android:text="@string/europe"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/australia_textview" />
@@ -349,7 +349,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
                 android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.NORTH_AMERICA)}"
-                android:text="North America"
+                android:text="@string/north_america"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/europe_textview" />
@@ -371,7 +371,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/axiforma_medium"
                 android:onClick="@{() -> homeFragment.filterCheckBoxClicked(filter.SOUTH_AMERICA)}"
-                android:text="South America"
+                android:text="@string/south_america"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/northAmerica_textview" />
@@ -392,7 +392,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/axiforma_bold"
-                android:text="Time Zone"
+                android:text="@string/time_zone"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/southAmerica_textview" />
@@ -557,7 +557,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/axiforma_semi_bold"
-                    android:text="Show results"
+                    android:text="@string/show_results"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -578,7 +578,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/axiforma_semi_bold"
-                    android:text="Reset"
+                    android:text="@string/reset"
                     android:textSize="16sp" />
 
             </FrameLayout>

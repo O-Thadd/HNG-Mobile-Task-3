@@ -15,4 +15,7 @@
     <color name="explore_grey2">#667085</color>
     <color name="explore_white_transparent">#4DFFFFFF</color>
     <color name="explore_blue_transparent">#4D001637</color>
+    <color name="explore_night_mode_blue">#000F24</color>
+    <color name="global_background">@color/white</color>
+
 </resources>

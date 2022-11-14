@@ -207,9 +207,9 @@ class ExploreViewModelFactory : ViewModelProvider.Factory {
 }
 
 enum class Languages(val tag: String){
-    ENGLISH("eng"),
-    GERMAN("deu"),
-    FRENCH("fra"),
-    ITALIAN("ita"),
-    SPANISH("spa"),
+    ENGLISH("en"),
+    GERMAN("de"),
+    FRENCH("fr"),
+    ITALIAN("it"),
+    SPANISH("es"),
 }

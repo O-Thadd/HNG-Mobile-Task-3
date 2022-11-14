@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="search_country">Rechercher un pays</string>
+    <string name="filter">Filtre</string>
+    <string name="continent">Continent</string>
+    <string name="africa">Afrique</string>
+    <string name="antarctica">Antarctique</string>
+    <string name="asia">Asie</string>
+    <string name="australia">Australie</string>
+    <string name="europe">L\'Europe</string>
+    <string name="north_america">Amérique du Nord</string>
+    <string name="south_america">Amérique du Sud</string>
+    <string name="time_zone">Fuseau horaire</string>
+    <string name="show_results">Montrer les résultats</string>
+    <string name="reset">Réinitialiser</string>
+    <string name="capital">Capital:\u0020</string>
+    <string name="population">Population:\u0020</string>
+    <string name="area">Zone:\u0020</string>
+    <string name="continent_with_colon">Continent:\u0020</string>
+    <string name="landlocked">Enclavé:\u0020</string>
+    <string name="independence">Indépendance:\u0020</string>
+    <string name="un_member">Membre de l\'ONU :\u0020</string>
+    <string name="region">Région:\u0020</string>
+    <string name="sub_region">Sous-région:\u0020</string>
+    <string name="languages">Langues :\u0020</string>
+    <string name="currency">Devise:\u0020</string>
+    <string name="timezone">Fuseau horaire:\u0020</string>
+    <string name="dialling_code">Fuseau horaire:\u0020</string>
+    <string name="driving_side">Indicatif téléphonique:\u0020</string>
+
+</resources>

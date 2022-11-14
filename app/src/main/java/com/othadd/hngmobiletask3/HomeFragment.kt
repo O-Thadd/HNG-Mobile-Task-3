@@ -10,7 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.LocaleListCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -124,6 +126,8 @@ class HomeFragment : Fragment() {
 
         sharedViewModel.languageTag.observe(viewLifecycleOwner) {
             updateLanguagesDialogState(it)
+            val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(it)
+            AppCompatDelegate.setApplicationLocales(appLocale)
         }
 
         sharedViewModel.hideDialogs.observe(viewLifecycleOwner) {

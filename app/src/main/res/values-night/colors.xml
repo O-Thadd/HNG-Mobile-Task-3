@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="global_background">@color/explore_night_mode_blue</color>
+</resources>

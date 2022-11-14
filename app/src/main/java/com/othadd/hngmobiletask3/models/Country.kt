@@ -28,7 +28,7 @@ data class Country(val json: JSONObject) {
 
     fun toUICountry(languageTag: String): UICountry{
         val appropriateNameForLanguage = translatedNames[languageTag] ?: name
-        return UICountry(appropriateNameForLanguage, capital, flagURL)
+        return UICountry(name, appropriateNameForLanguage, capital, flagURL)
     }
 
     init {
