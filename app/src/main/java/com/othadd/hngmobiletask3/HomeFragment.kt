@@ -135,11 +135,6 @@ class HomeFragment : Fragment() {
             hideFilterDialog()
         }
 
-        //debug
-        sharedViewModel.countriesForRecyclerView.observe(viewLifecycleOwner) {
-            binding.debugTotalNumberOfCountriesOnDisplayTextView.text = it.size.toString()
-        }
-
         sharedViewModel.filters.observe(viewLifecycleOwner){
             for (filter in it.first){
                 updateFilterCheckBoxes(filter, true)
@@ -149,7 +144,45 @@ class HomeFragment : Fragment() {
                 updateFilterCheckBoxes(filter, false)
             }
         }
+
+        sharedViewModel.darkMode.observe(viewLifecycleOwner){
+            binding.uiModeButtonImageView.setImageResource(if (it) R.drawable.ic_night_mode else R.drawable.ic_light_mode)
+            AppCompatDelegate.setDefaultNightMode(if (it) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
+        sharedViewModel.apiCallSate.observe(viewLifecycleOwner){
+            when(it){
+                BUSY -> {
+                    binding.countryRecyclerView.visibility = View.GONE
+                    binding.networkErrorConstraintLayout.visibility = View.GONE
+                    binding.loadingConstraintLayout.visibility = View.VISIBLE
+                }
+
+                PASSED -> {
+                    binding.countryRecyclerView.visibility = View.VISIBLE
+                    binding.networkErrorConstraintLayout.visibility = View.GONE
+                    binding.loadingConstraintLayout.visibility = View.GONE
+                }
+
+                FAILED -> {
+                    binding.countryRecyclerView.visibility = View.GONE
+                    binding.networkErrorConstraintLayout.visibility = View.VISIBLE
+                    binding.loadingConstraintLayout.visibility = View.GONE
+                }
+            }
+        }
+
+        sharedViewModel.continentGroupHidden.observe(viewLifecycleOwner){
+            binding.continentDropDownButtonImageView.setImageResource(if(it) R.drawable.ic_arrow_down else R.drawable.ic_arrow_up)
+            if (it) hideContinentGroup() else showContinentGroup()
+        }
+
+        sharedViewModel.timezoneGroupHidden.observe(viewLifecycleOwner){
+            binding.timezoneDropDownButtonImageView.setImageResource(if (it) R.drawable.ic_arrow_down else R.drawable.ic_arrow_up)
+            if (it) hideTimezoneGroup() else showTimezoneGroup()
+        }
     }
+
 
     private fun updateLanguagesDialogState(it: String) {
         hideDialog(languagesDialog)
@@ -222,7 +255,7 @@ class HomeFragment : Fragment() {
         dialogOverlay.visibility = View.VISIBLE
 
         val movePropertyValueHolder =
-            PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, 0f, -dialog.height.toFloat())
+            PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, dialog.height.toFloat(), 0f)
         val transparencyValueHolder = PropertyValuesHolder.ofFloat(View.ALPHA, 1.0f)
         val animator = ObjectAnimator.ofPropertyValuesHolder(
             dialog,
@@ -236,7 +269,7 @@ class HomeFragment : Fragment() {
         dialogOverlay.visibility = View.GONE
         backPressedCallback.isEnabled = false
 
-        val movePropertyValueHolder = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, 0f)
+        val movePropertyValueHolder = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, 0f, dialog.height.toFloat())
         val transparencyValueHolder = PropertyValuesHolder.ofFloat(View.ALPHA, 0.0f)
         val animator = ObjectAnimator.ofPropertyValuesHolder(
             dialog,
@@ -266,6 +299,22 @@ class HomeFragment : Fragment() {
     fun suspendFilteraion() {
         hideFilterDialog()
         sharedViewModel.suspendFilteration()
+    }
+
+    private fun hideContinentGroup(){
+        binding.continentGroupConstraintLayout.visibility = View.GONE
+    }
+
+    private fun showContinentGroup() {
+        binding.continentGroupConstraintLayout.visibility = View.VISIBLE
+    }
+
+    fun hideTimezoneGroup(){
+        binding.timezoneGroupConstraintLayout.visibility = View.GONE
+    }
+
+    fun showTimezoneGroup(){
+        binding.timezoneGroupConstraintLayout.visibility = View.VISIBLE
     }
 
 }

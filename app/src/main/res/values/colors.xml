@@ -17,5 +17,9 @@
     <color name="explore_blue_transparent">#4D001637</color>
     <color name="explore_night_mode_blue">#000F24</color>
     <color name="global_background">@color/white</color>
+    <color name="text">@color/explore_black</color>
+    <color name="app_name">@color/explore_blue</color>
+    <color name="hint">#4D000000</color>
+
 
 </resources>

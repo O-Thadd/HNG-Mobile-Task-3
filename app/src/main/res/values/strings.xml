@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">HNG Mobile Task 3</string>
-    <!-- TODO:\u0020Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="search_country">Search Country</string>
     <string name="filter">Filter</string>
     <string name="continent">Continent</string>

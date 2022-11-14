@@ -11,6 +11,11 @@ import com.othadd.hngmobiletask3.util.toUICountries
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 
+const val DEFAULT = 0
+const val BUSY = 1
+const val PASSED = 2
+const val FAILED = 3
+
 class ExploreViewModel : ViewModel() {
 
     private var _countriesForRecyclerView = MutableLiveData<List<Any>>()
@@ -37,6 +42,17 @@ class ExploreViewModel : ViewModel() {
     private var _hideDialogs = MutableLiveData<Boolean>()
     val hideDialogs: LiveData<Boolean> get() = _hideDialogs
 
+    private var _darkMode = MutableLiveData<Boolean>()
+    val darkMode: LiveData<Boolean> get() = _darkMode
+
+    private var _apiCallState = MutableLiveData<Int>()
+    val apiCallSate: LiveData<Int> get() = _apiCallState
+
+    private var _continentGroupHidden = MutableLiveData<Boolean>()
+    val continentGroupHidden: LiveData<Boolean> get() = _continentGroupHidden
+
+    private var _timezoneGroupHidden = MutableLiveData<Boolean>()
+    val timezoneGroupHidden: LiveData<Boolean> get() = _timezoneGroupHidden
 
 
     fun updateSelectedFilters(filter: String): Boolean {
@@ -49,12 +65,11 @@ class ExploreViewModel : ViewModel() {
         }
     }
 
-    private fun applyFilters(filters: MutableList<String> = selectedFilters){
+    private fun applyFilters(filters: MutableList<String> = selectedFilters) {
         hideDialogs()
-        if (filters.isEmpty()){
+        if (filters.isEmpty()) {
             populateRecyclerviewList(countriesStore)
-        }
-        else{
+        } else {
             val filteredCountries = filterCountries(countriesStore, filters)
             populateRecyclerviewList(filteredCountries)
         }
@@ -63,16 +78,16 @@ class ExploreViewModel : ViewModel() {
         filters.clear()
     }
 
-    fun applyFilters(){
+    fun applyFilters() {
         applyFilters(selectedFilters)
     }
 
-    fun resetFilters(){
+    fun resetFilters() {
         selectedFilters.clear()
         applyFilters(selectedFilters)
     }
 
-    private fun updateFiltersLiveData(filters: List<String>){
+    private fun updateFiltersLiveData(filters: List<String>) {
         val otherFilters = Filter.getOtherFilters(filters)
         _filters.value = Pair(filters, otherFilters)
     }
@@ -83,12 +98,12 @@ class ExploreViewModel : ViewModel() {
         _hideDialogs.value = !currentValue
     }
 
-    fun prepFilteration(){
+    fun prepFilteration() {
         selectedFilters.clear()
         selectedFilters.addAll(_filters.value!!.first)
     }
 
-    fun suspendFilteration(){
+    fun suspendFilteration() {
         selectedFilters.clear()
         updateFiltersLiveData(_filters.value!!.first.toList())
     }
@@ -101,8 +116,8 @@ class ExploreViewModel : ViewModel() {
         _topImageGroupPosition.value = if (_topImageGroupPosition.value == 1) 2 else 1
     }
 
-    fun setLanguage(languageId: Int){
-        when(languageId){
+    fun setLanguage(languageId: Int) {
+        when (languageId) {
             1 -> _languageTag.value = Languages.ENGLISH.tag
             2 -> _languageTag.value = Languages.GERMAN.tag
             3 -> _languageTag.value = Languages.FRENCH.tag
@@ -112,28 +127,41 @@ class ExploreViewModel : ViewModel() {
         populateRecyclerviewList(currentCountriesList)
     }
 
+    fun alterDarkMode() {
+        _darkMode.value = !_darkMode.value!!
+    }
+
+    fun alterContinentGroupState(){
+        _continentGroupHidden.value = !_continentGroupHidden.value!!
+    }
+
+    fun alterTimezoneGroupState(){
+        _timezoneGroupHidden.value = !_timezoneGroupHidden.value!!
+    }
 
 
-    private fun populateRecyclerviewList(countries: List<Country>){
+    private fun populateRecyclerviewList(countries: List<Country>) {
         currentCountriesList = countries
         val uiCountries = countries.toUICountries(_languageTag.value ?: Languages.ENGLISH.tag)
         val countryAlphabetGroup = sortCountriesIntoAlphabetGroups(uiCountries)
         populateRecyclerViewListInOrder(countryAlphabetGroup)
     }
 
-    fun searchCountries(countrySubstring: String){
+    fun searchCountries(countrySubstring: String) {
 
-        if (countrySubstring.isBlank()){
+        if (countrySubstring.isBlank()) {
             applyFilters(_filters.value!!.first.toMutableList())
             return
         }
 
-        val matchedCountries = currentCountriesList.filter { it.name.startsWith(countrySubstring, true) }
+        val matchedCountries =
+            currentCountriesList.filter { it.name.startsWith(countrySubstring, true) }
 
         populateRecyclerviewList(matchedCountries.toList())
     }
 
     private suspend fun getCountriesParseAndPopulateHomeScreen() {
+        _apiCallState.value = BUSY
         val countriesJsonString = NetworkApi.retrofitService.getAllCountries()
         val countriesJsonArray = JSONArray(countriesJsonString)
         val countries = parseJsonIntoCountries(countriesJsonArray).toList()
@@ -142,6 +170,7 @@ class ExploreViewModel : ViewModel() {
         countriesStore.addAll(countries)
 
         populateRecyclerviewList(countries)
+        _apiCallState.value = PASSED
     }
 
     private fun populateRecyclerViewListInOrder(countryGroupsByAlphabet: MutableList<CountryAlphabetGroup>) {
@@ -185,15 +214,38 @@ class ExploreViewModel : ViewModel() {
         return countries
     }
 
+    private fun netWorkError() {
+        _apiCallState.value = FAILED
+    }
+
+    fun tryAgain() {
+        viewModelScope.launch {
+            try {
+                getCountriesParseAndPopulateHomeScreen()
+            } catch (e: Exception) {
+                netWorkError()
+            }
+        }
+    }
+
     init {
         viewModelScope.launch {
+            _darkMode.value = false
             _languageTag.value = Languages.ENGLISH.tag
-            getCountriesParseAndPopulateHomeScreen()
+            _apiCallState.value = BUSY
+            try {
+                getCountriesParseAndPopulateHomeScreen()
+            } catch (e: Exception) {
+                netWorkError()
+            }
             _topImageGroupPosition.value = 1
             updateFiltersLiveData(listOf())
             _hideDialogs.value = false
+            _timezoneGroupHidden.value = true
+            _continentGroupHidden.value = true
         }
     }
+
 }
 
 class ExploreViewModelFactory : ViewModelProvider.Factory {
@@ -206,7 +258,7 @@ class ExploreViewModelFactory : ViewModelProvider.Factory {
     }
 }
 
-enum class Languages(val tag: String){
+enum class Languages(val tag: String) {
     ENGLISH("en"),
     GERMAN("de"),
     FRENCH("fr"),
